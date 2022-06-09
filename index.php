@@ -35,4 +35,7 @@ $getcat= $obj-> display_category();
     
     <?php include_once("includes/footer.php"); ?>
 
+
+
+    
    <?php include_once("includes/script.php"); ?>
