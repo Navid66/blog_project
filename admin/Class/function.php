@@ -66,4 +66,79 @@ class adminBlog {
                     return "Category Deleted Successfully!";
                 }
             }
-        }
+
+            public function add_post($data){
+                $post_title = $data['post_title'];
+                $post_content = $data['post_content'];
+                $post_img = $_FILES['post_img']['name'];
+                $post_img_tmp = $_FILES['post_img']['tmp_name'];
+                $post_category = $data['post_category'];
+                $post_summery = $data['post_summery'];
+                $post_tag = $data['post_tag'];
+                $post_status = $data['post_status'];
+
+                $query = "INSERT INTO posts(post_title,post_content,post_img,post_ctg,post_author,
+                post_date,post_comment_count,post_summery,post_tag,post_status) VALUES('$post_title',
+                '$post_content','$post_img',$post_category,'Navid & Fahid',now(),3,'$post_summery',
+                '$post_tag',$post_status)";
+
+                if(mysqli_query($this->conn, $query)){
+                    move_uploaded_file($post_img_tmp,'../upload/ .$post_img');
+                    return "Post Added Successfully!!!";
+                }
+                
+            }
+            
+            public function display_post(){
+                $query = "SELECT * FROM post_with_ctg";
+                if(mysqli_query($this->conn, $query)){
+                    $posts = mysqli_query($this->conn, $query);
+                    return $posts;
+                }
+            }
+
+            public function display_post_public(){
+                $query = "SELECT * FROM post_with_ctg WHERE post_status=1";
+                if(mysqli_query($this->conn, $query)){
+                    $posts = mysqli_query($this->conn, $query);
+                    return $posts;
+                }
+
+            }
+
+            public function edit_img($data){
+                $id = $data['editimg_id'];
+                $imgname = $_FILES['change_img']['name'];
+                $tmp_name = $_FILES['change_img']['tmp_name'];
+                
+                $query = "UPDATE posts SET post_img='$imgname' WHERE post_id=$id";
+
+                if(mysqli_query($this->conn,$query)){
+                    move_uploaded_file($tmp_name,'../upload/ .$imgname'); 
+                    return "Thumbnail Updated Successfully!!";  
+                }
+
+            }
+            public function get_post_info($id){
+                $query = "SELECT * FROM post_with_ctg WHERE post_id=$id";
+                if(mysqli_query($this->conn, $query)){
+                    $post_info = mysqli_query($this->conn, $query);
+                    $post = mysqli_fetch_assoc($post_info);
+                    return $post;
+                }
+            }  
+            
+            public function update_post($data){
+                $post_title = $data['change_title'];
+                $post_content = $data['change_content'];
+                $post_id = $data['edit_post_id'];
+
+                $query = "UPDATE posts SET post_title='$post_title', post_content='$post_content' WHERE post_id=$post_id";
+
+                if(mysqli_query($this->conn, $query)){
+                    return "Post Updated Successfully!!";
+                }
+            }
+        
+        
+}

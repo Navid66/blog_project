@@ -63,7 +63,7 @@ if(isset($id)){
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
-                                <a href="#">Terms &amp; Conditions</a>
+                                <a href="#">Term's &amp; Conditions</a>
                             </div>
                         </div>
                     </div>
